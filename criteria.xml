@@ -1,0 +1,55 @@
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<criteria>
+		<criterion id="goals_per_game" name="Total goals divided by the number of games.">
+			<scale>
+				<quantitative>
+					<preferenceDirection>max</preferenceDirection>
+				</quantitative>
+			</scale>
+		</criterion>
+		<criterion id="assists_per_game" name="Total assists divided by the number of games.">
+			<scale>
+				<quantitative>
+					<preferenceDirection>max</preferenceDirection>
+				</quantitative>
+			</scale>
+		</criterion>
+		<criterion id="points_per_game" name="Total goals and assists divided by the number of games.">
+			<scale>
+				<quantitative>
+					<preferenceDirection>max</preferenceDirection>
+				</quantitative>
+			</scale>
+		</criterion>
+		<criterion id="penalty_mins" name="Player penatly minutes (season)">
+			<scale>
+				<quantitative>
+					<preferenceDirection>min</preferenceDirection>
+				</quantitative>
+			</scale>
+		</criterion>
+		<criterion id="date_of_birth" name="Month + 12 * Years Since 2000">
+			<scale>
+				<quantitative>
+					<preferenceDirection>min</preferenceDirection>
+				</quantitative>
+			</scale>
+		</criterion>
+		<criterion id="height" name="Height in cm">
+			<scale>
+				<quantitative>
+					<preferenceDirection>max</preferenceDirection>
+				</quantitative>
+			</scale>
+		</criterion>
+		<criterion id="weight" name="Weight in kg">
+			<scale>
+				<quantitative>
+					<preferenceDirection>max</preferenceDirection>
+				</quantitative>
+			</scale>
+		</criterion>
+		</criteria>
+
+</xmcda:XMCDA>
