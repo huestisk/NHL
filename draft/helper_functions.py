@@ -82,32 +82,31 @@ def create_criteria_xml(criteria, filename):
 
 ### Performance
 
-def get_performance(data, crit: str):
-	if crit == "goals_per_game":
-		if data['position'] == 'G' or data['gp'] in ['-', '', '0']:
-			return 0
-		else:
-			return round(int(data['g']) / int(data['gp']), 3)
-	elif crit == "assists_per_game":
-		if data['position'] == 'G' or data['gp'] in ['-', '', '0']:
-			return 0
-		else:
-			return round(int(data['a']) / int(data['gp']), 3)
-	elif crit == "points_per_game":
-		if data['position'] == 'G' or data['gp'] in ['-', '', '0']:
-			return 0
-		else:
-			return round((int(data['g']) + int(data['a'])) / int(data['gp']), 3)
-	elif crit == "penalty_mins":
-		return int(data['pim']) if data['pim'] != '-' and data['pim'] != '' else 0
-	elif crit == "date_of_birth":
-		return (int(data['birth-year']) - 2000) * 12 + int(data['birth-month'])
-	elif crit == "height":
-		return int(data['height'])
-	elif crit == "weight":
-		return int(data['weight'])
-	else:
-		raise Exception("Invalid Criteria.")
+def get_performance(data, crit: str) -> int:
+    out = 0
+
+    if crit == "goals_per_game" and data['position'] != 'G' and data['gp'] not in ['-', '', '0']:
+        out = 5 *int(data['g']) / int(data['gp'])
+
+    elif crit == "assists_per_game" and data['position'] != 'G' and data['gp'] not in ['-', '', '0']:
+        out = 5 * int(data['a']) / int(data['gp'])
+
+    elif crit == "points_per_game" and data['position'] != 'G' and data['gp'] not in ['-', '', '0']:
+        out = 2.5 * (int(data['g']) + int(data['a'])) / int(data['gp'])
+
+    elif crit == "penalty_mins" and data['pim'] != '-' and data['pim'] != '':
+        out = int(data['pim']) / 7
+
+    elif crit == "date_of_birth":
+        out = (int(data['birth-year']) - 2001) * 12 + int(data['birth-month'])
+
+    elif crit == "height":
+        out = (int(data['height']) - 170) / 5
+
+    elif crit == "weight":
+        out = (int(data['weight']) - 70) / 5
+
+    return min(5, max(1, int(out)))
 
 
 def create_performances_xml(players, criteria, filename):

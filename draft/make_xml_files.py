@@ -32,7 +32,7 @@ criteria = {
     "assists_per_game": "Total assists divided by the number of games.",
     "points_per_game": "Total goals and assists divided by the number of games.",
     "penalty_mins": "Player penatly minutes (season)",
-    "date_of_birth": "Month + 12 * Years Since 2000",
+    # "date_of_birth": "Month + 12 * Years Since 2000",
     "height": "Height in cm",
     "weight": "Weight in kg",
     # "position": "Player's position: Defense, Forward, Center, Right/Left Wing, Goaltender.",
