@@ -29,13 +29,12 @@ class Scraper():
     def __init__(self) -> None:
         pass
 
-
-    def scrape_scores_by_season(self, year, season=None, playoffs=None) -> pd.DataFrame:
+    def scrape_scores_by_season(self, year, reg_season=None, playoffs=None) -> pd.DataFrame:
         ''' Read scores from website 
         TODO: add functionality to detect errors
         FIXME: currently tables are hard coded
         '''
-        if season or (season is None and not playoffs):
+        if reg_season or (reg_season is None and not playoffs):
             try:
                 url = f'https://www.hockey-reference.com/leagues/NHL_{year}_games.html'
 
@@ -43,15 +42,17 @@ class Scraper():
                 html = soup(response.text, 'html.parser')
                 div = html.find(id='div_games')
 
-                df_season = pd.read_html(str(div))[0]
-                df_season.columns = ['Date', 'Visitor', 'Goals Visitor', 'Home', 'Goals Home', 'OT', 'Att.', 'LOG', 'Notes']
+                df_reg_season = pd.read_html(str(div))[0]
+                df_reg_season.columns = ['Date', 'Visitor', 'Goals Visitor', 'Home', 'Goals Home', 'OT', 'Att.', 'LOG', 'Notes']
+                df_reg_season = df_reg_season.drop('Notes', axis=1)
+                df_reg_season['Playoffs'] = False
 
                 del response, html, div
 
             except Exception as e:
                 raise e
         else:
-            df_season = pd.DataFrame()
+            df_reg_season = pd.DataFrame()
 
         if playoffs:
             try:
@@ -69,18 +70,17 @@ class Scraper():
                 df_playoffs = pd.concat(series, ignore_index=True)
                 df_playoffs.columns = ['Game', 'Date', 'Visitor', 'Goals Visitor', 'Home', 'Goals Home', 'OT']
                 df_playoffs["Date"] = df_playoffs["Date"].apply(lambda x: f"{year}-{datetime.strptime(x, '%B %d').strftime('%m-%d')}")
-                df_playoffs['Notes'] = 'Playoffs'
+                df_playoffs['Playoffs'] = True
 
             except Exception as e:
                 raise e
         else:
             df_playoffs = pd.DataFrame()
 
-        df = pd.concat([df_season, df_playoffs], ignore_index=True)
+        df = pd.concat([df_reg_season, df_playoffs], ignore_index=True)
 
         df = df.convert_dtypes()
         df['Date'] = df['Date'].astype('datetime64')
-        df['Notes'][df['Notes'].isnull()] = ''
 
         return df
 

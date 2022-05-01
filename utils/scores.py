@@ -1,18 +1,18 @@
 import pandas as pd
-
+import numpy as np
 
 class Scores(pd.DataFrame):
 
     def __init__(self, data, year) -> None:
         super().__init__(data=data)
         self.season = year
-        self.playoffs = 'Playoffs' in self['Notes']
+        self.playoffs = np.any(self['Playoffs'])
         self.teams = set(self['Home']).union(set(self['Visitor']))
 
-
     def get_record(self, team, opponent=None):
-
-        # columns = ['Team', 'Games', 'Wins', 'Losses', 'OT Losses', 'Points', 'P%', 'OT Wins', 'Reg Win']
+        """
+        Columns: ['Team', 'Games', 'Wins', 'Losses', 'OT Losses', 'Points', 'P%', 'OT Wins', 'Reg Win']
+        """
         team_dict = {'Team': team}
 
         # filter
@@ -29,10 +29,10 @@ class Scores(pd.DataFrame):
             away_losses = away_losses.loc[(self['Home']==opponent)]
 
         wins = pd.concat([home_wins, away_wins], ignore_index=True)
-        wins = wins.loc[(self['Notes'] != 'Playoffs')]
+        wins = wins.loc[~self['Playoffs']]
 
         losses = pd.concat([home_losses, away_losses], ignore_index=True)
-        losses = losses.loc[(self['Notes'] != 'Playoffs')]
+        losses = wins.loc[~self['Playoffs']] 
 
         # add to dict
         team_dict['Wins'] = len(wins)
