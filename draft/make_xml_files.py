@@ -40,16 +40,16 @@ criteria = {
 }
 
 
-# Create alternatives.xml
-create_alternatives_xml(players, alternatives_file)
+# # Create alternatives.xml
+# create_alternatives_xml(players, alternatives_file)
 
 
-# Create criteria.xml
-create_criteria_xml(criteria, criteria_file)
+# # Create criteria.xml
+# create_criteria_xml(criteria, criteria_file)
 
 
-# Create performaces.xml
-create_performances_xml(players, criteria, performance_file)
+# # Create performaces.xml
+# create_performances_xml(players, criteria, performance_file)
 
 
 # Create preferences.xml
