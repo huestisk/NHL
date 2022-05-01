@@ -2,6 +2,7 @@
 *.pkl
 env/
 data/
+archive/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
